@@ -11,7 +11,7 @@ public class Borsa {
 	}
 	public Borsa(int pesoMax) {
 		this.pesoMax = pesoMax;
-		this.attrezzi = new Attrezzo[10]; // speriamo bastino...
+		this.attrezzi = new Attrezzo[10]; // speriamo che bastino...
 		this.numeroAttrezzi = 0;
 	}
 	public boolean addAttrezzo(Attrezzo attrezzo) {
@@ -26,6 +26,7 @@ public class Borsa {
 	public int getPesoMax() {
 		return pesoMax;
 	}
+	
 	public Attrezzo getAttrezzo(String nomeAttrezzo) {
 		Attrezzo a = null;
 		for (int i= 0; i<this.numeroAttrezzi; i++)
@@ -33,13 +34,23 @@ public class Borsa {
 				a = attrezzi[i];
 		return a;
 	}
-
 	public int getPeso() {
 		int peso = 0;
+		if(numeroAttrezzi==0)
+			return peso;
+		else {
 		for (int i= 0; i<this.numeroAttrezzi; i++)
 			peso += this.attrezzi[i].getPeso();
+		}
 		return peso;
 	}
+	
+	public boolean getPesoRimanente(Attrezzo a) {
+		if(a != null && this.getPesoMax()-this.getPeso()>=a.getPeso())
+			return true;
+		return false; 
+	}
+	
 	public boolean isEmpty() {
 		return this.numeroAttrezzi == 0;
 	}
@@ -48,23 +59,23 @@ public class Borsa {
 	}
 	public Attrezzo removeAttrezzo(String nomeAttrezzo) {
 		Attrezzo a = null;
-		// --->  TODO (implementare questo metodo) <--
-		if(nomeAttrezzo!=null) {
-			int i =0;
-			for(Attrezzo att: this.attrezzi) {
-				if(att!=null) {
+
+		if(nomeAttrezzo!=null){
+			int i = 0;
+			for(Attrezzo att : this.attrezzi) {
+				if(att != null) {
 					if(att.getNome().equals(nomeAttrezzo)) {
-						a=att;
-						this.attrezzi[i]=null;
+						a = att;
+						this.attrezzi[i] = null;
 						this.numeroAttrezzi--;
 					}
 				}
 				i++;
+
 			}
 		}
 		return a;
 	}
-	
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		if (!this.isEmpty()) {
@@ -76,4 +87,5 @@ public class Borsa {
 			s.append("Borsa vuota");
 		return s.toString();
 	}
+
 }
